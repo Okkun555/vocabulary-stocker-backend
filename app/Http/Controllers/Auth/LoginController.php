@@ -7,6 +7,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Usecase\Auth\LoginUsecase;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -21,14 +24,15 @@ class LoginController extends Controller
      * [POST] /api/login
      *
      * @param LoginRequest $request
-     * @return UserResource
+     * @return JsonResource
      */
-    public function __invoke(LoginRequest $request): UserResource
+    public function __invoke(LoginRequest $request): JsonResource
     {
         try {
             $response = $this->loginUsecase->handle($request);
             return new UserResource($response);
         } catch (Exception $e) {
+            Log::debug($e);
             // TODO: エラーをどう扱うか検討
         }
     }

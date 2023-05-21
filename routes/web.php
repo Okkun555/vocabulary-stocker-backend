@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/** 認証関連 */
+Route::post('/login', \App\Http\Controllers\Auth\LoginController::class)->name('login');
+
